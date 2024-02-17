@@ -19,11 +19,13 @@ function Header(){
                     <span className="text-white fs-5 ms-1">TSU.Ключи</span>
                 </Link>
                 
-                <span className="text-white ms-5" style={{opacity: 0.7}}>Заявки</span>
-                <span className="text-white ms-5" style={{opacity: 0.7}}>Пользователи</span>
-                <span className="text-white ms-5" style={{opacity: 0.7}}>Ключи</span>
-                <Link to="/login" className="text-white ms-auto me-5 text-decoration-none">
-                    <span  style={{opacity: 0.7}}>Вход</span>
+                <Link to='' className="text-white ms-5 text-decoration-none" style={{opacity: 0.7}}>Заявки</Link>
+                <Link to='/users' className="text-white ms-5 text-decoration-none" style={{opacity: 0.7}}>
+                    Пользователи
+                </Link>
+                <Link to='' className="text-white ms-5 text-decoration-none" style={{opacity: 0.7}}>Ключи</Link>
+                <Link to="/login" className="text-white ms-auto me-5 text-decoration-none" style={{opacity: 0.7}}>
+                    Вход
                 </Link>
                 
                 

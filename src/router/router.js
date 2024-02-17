@@ -2,6 +2,7 @@ import React from 'react';
 import { Routes, Route} from 'react-router';
 import Header from '../components/header';
 import Login from '../components/login';
+import UsersPage from '../components/users';
 
 export default function Router(){
     return(
@@ -11,6 +12,12 @@ export default function Router(){
                 <>
                     <Header/>
                     <Login/>
+                </>
+            }/>
+            <Route path='users' element={
+                <>
+                    <Header/>
+                    <UsersPage/>
                 </>
             }/>
         </Routes>
