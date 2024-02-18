@@ -7,19 +7,25 @@ export default function UsersPage(){
     const data=[
         {
             name: 'Иванов Иван',
-            role: 'Студент'
+            role: 'Студент',
+            email: 'exemple@gmail.com'
 
         },
         {   
             name: 'Чел Человский',
-            role: 'Преподаватель'
+            role: 'Преподаватель',
+            email: 'exemple@gmail.com'
+        },
+        {   
+            name: 'Рандом юзер',
+            role: 'Пользователь',
+            email: 'exemple@gmail.com'
         }
     ]
     return(
         <Container  className="mt-5">
             <Card>
                 <CardHeader>
-                    
                     Фильтры
                 </CardHeader>
                 <CardBody className="row">
@@ -43,6 +49,7 @@ export default function UsersPage(){
                     <UserCard
                         name={user.name}
                         role={user.role}
+                        email={user.email}
                     />
                 ))}
             </div>
