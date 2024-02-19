@@ -6,17 +6,22 @@ import UserCard from '../components/userCard'
 export default function UsersPage(){
     const data=[
         {
+            key: '1',
             name: 'Иванов Иван',
             role: 'Студент',
             email: 'exemple@gmail.com'
 
         },
         {   
+            key: '2',
+
             name: 'Чел Человский',
             role: 'Преподаватель',
             email: 'exemple@gmail.com'
         },
         {   
+            key: '3',
+
             name: 'Рандом юзер',
             role: 'Пользователь',
             email: 'exemple@gmail.com'
@@ -30,11 +35,11 @@ export default function UsersPage(){
                 </CardHeader>
                 <CardBody className="row">
                     <FormGroup className="col-md-3">
-                        <FormLabel for='NameSearch'>Поиск по имени пользователя</FormLabel>
+                        <FormLabel>Поиск по имени пользователя</FormLabel>
                         <FormControl id='NameSearch'></FormControl>
                     </FormGroup>
                     <FormGroup className="col-md-3 ms-5">
-                        <FormLabel for='RoleSort'>Сортировка по роли</FormLabel>
+                        <FormLabel >Сортировка по роли</FormLabel>
                         <FormSelect id='RoleSort'>
                             <option>Выбрать роль</option>
                             <option value="Student">Студент</option>
@@ -47,6 +52,7 @@ export default function UsersPage(){
             <div className="mt-2">
                 {data.map((user)=>(
                     <UserCard
+                        key={user.key}
                         name={user.name}
                         role={user.role}
                         email={user.email}
