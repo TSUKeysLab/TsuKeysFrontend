@@ -42,7 +42,7 @@ export default function UserCard(props){
                             {email}
                         </div>
                         <Button className={`mt-2 fw-bold btn btn-sm text-black ${roleClass} rounded-pill border border-dark`} style={{ width: '100%' }} onClick={handleShow}>{role}</Button>
-                        <Modal show={showModal} onHide={handleClose}>
+                        <Modal centered show={showModal} onHide={handleClose}>
                             <ModalHeader closeButton>
                                 <ModalTitle>Назначить роль</ModalTitle>
                             </ModalHeader>
