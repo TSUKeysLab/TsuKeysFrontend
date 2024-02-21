@@ -38,7 +38,7 @@ export default function UsersPage(){
                         <FormLabel>Поиск по имени пользователя</FormLabel>
                         <FormControl id='NameSearch'></FormControl>
                     </FormGroup>
-                    <FormGroup className="col-md-3 ms-5">
+                    <FormGroup className="col-md-3">
                         <FormLabel >Сортировка по роли</FormLabel>
                         <FormSelect id='RoleSort'>
                             <option>Выбрать роль</option>
@@ -49,16 +49,21 @@ export default function UsersPage(){
                     <Button className="col-md-2 ms-auto me-3 mt-auto">Применить</Button>
                 </CardBody>
             </Card>
-            <div className="mt-2">
-                {data.map((user)=>(
-                    <UserCard
-                        key={user.key}
-                        name={user.name}
-                        role={user.role}
-                        email={user.email}
-                    />
-                ))}
-            </div>
+            <Card className="mt-3">
+                <CardBody>
+                    <div className="me-3 ms-3">
+                        {data.map((user)=>(
+                            <UserCard
+                                key={user.key}
+                                name={user.name}
+                                role={user.role}
+                                email={user.email}
+                            />
+                        ))}
+                    </div>
+                </CardBody>
+            </Card>
+            
             
         </Container>
     );
