@@ -28,6 +28,12 @@ function Header() {
         }
     }, [location]);
 
+    const token=localStorage.getItem('token')
+
+    const handleLogout = () => {
+        // Ваша логика для выхода
+    };
+
     return (
         <Navbar className="bg-dark shadow">
             <div className="py-1 d-flex align-items-center ms-5 flex-grow-1">
@@ -53,11 +59,16 @@ function Header() {
                     {headerText === "Ключи" ? <span className='text-primary'>Ключи</span> : "Ключи"}
 
                 </Link>
-                <Link to="/login" className="text-white ms-auto me-5 text-decoration-none" style={{ opacity: 0.7 }}>
-                    {headerText === "Вход" ? <span className='text-primary'>Вход</span> : "Вход"}
-                </Link>
-
-
+                {
+                    token ? (
+                        <Link to="/login" className="text-white ms-auto me-5 text-decoration-none" style={{ opacity: 0.7 }} onClick={handleLogout}>
+                            Выход
+                        </Link>
+                    ) : <Link to="/login" className="text-white ms-auto me-5 text-decoration-none" style={{ opacity: 0.7 }}>
+                            {headerText === "Вход" ? <span className='text-primary'>Вход</span> : "Вход"}
+                        </Link>
+                }
+                        
             </div>
         </Navbar>
     );
