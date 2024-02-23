@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Button, Navbar, Image, Dropdown, DropdownButton } from 'react-bootstrap';
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { LogoutFetch } from "../requests/requestsMetods";
 
 function Header() {
     const location = useLocation();
@@ -29,9 +30,15 @@ function Header() {
     }, [location]);
 
     const token=localStorage.getItem('token')
+    const navigate = useNavigate();
 
-    const handleLogout = () => {
-        // Ваша логика для выхода
+    const handleLogout = async (e) => {
+        e.preventDefault()
+        const response=await LogoutFetch(token)
+        if (response){
+            localStorage.clear()
+            navigate('/login')
+        }
     };
 
     return (
@@ -61,9 +68,10 @@ function Header() {
                 </Link>
                 {
                     token ? (
-                        <Link to="/login" className="text-white ms-auto me-5 text-decoration-none" style={{ opacity: 0.7 }} onClick={handleLogout}>
-                            Выход
-                        </Link>
+                        <span className="text-white ms-auto me-5 text-decoration-none" style={{ opacity: 0.7, cursor: 'pointer' }} onClick={handleLogout}>Выход</span>
+                        // <Link to="/login" className="text-white ms-auto me-5 text-decoration-none" style={{ opacity: 0.7 }} onClick={handleLogout}>
+                        //     Выход
+                        // </Link>
                     ) : <Link to="/login" className="text-white ms-auto me-5 text-decoration-none" style={{ opacity: 0.7 }}>
                             {headerText === "Вход" ? <span className='text-primary'>Вход</span> : "Вход"}
                         </Link>
