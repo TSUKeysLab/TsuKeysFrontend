@@ -1,8 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { Container, Row, Col, Button, Navbar, Image,Dropdown,DropdownButton, Card, CardBody, CardTitle,Form, FormGroup, FormControl, FormLabel    } from 'react-bootstrap';
 
 
 export default function Login(){
+
+    const [data, setData]=useState({
+        email: '',
+        password: ''
+    })
+
+
+    
     return (
         <Container className="d-flex justify-content-center align-items-center mt-5">
             <Card className="col-md-6 shadow">
