@@ -32,9 +32,7 @@ export default function Login(){
         setLoading(true);
         
         const response=await LoginFetch(data)
-        debugger
-        //const responseData=await response.json()
-        // console.log(response)
+        
         setTimeout(() => {
             setLoading(false);
             if (response.token) {
