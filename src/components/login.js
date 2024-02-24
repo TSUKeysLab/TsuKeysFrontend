@@ -30,13 +30,15 @@ export default function Login(){
     const handleSubmit=async (e)=>{
         e.preventDefault()
         setLoading(true);
+        
         const response=await LoginFetch(data)
-        const responseData=await response.json()
+        debugger
+        //const responseData=await response.json()
         // console.log(response)
         setTimeout(() => {
             setLoading(false);
-            if (response.status === 200) {
-                localStorage.setItem('token', responseData.token)
+            if (response.token) {
+                localStorage.setItem('token', response.token)
                 navigate('/users');
                 // console.log(responseData);
             } 
