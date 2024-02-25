@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Button, Alert,Navbar, Image,Dropdown,DropdownButton, Card, CardBody, CardTitle,Form, FormGroup, FormControl, FormLabel    } from 'react-bootstrap';
-import { LoginFetch } from "../requests/requestsMetods";
+import { LoginFetch, ProfileFetch } from "../requests/requestsMetods";
 import { useNavigate } from "react-router-dom";
 import { LineWave  as Loader} from "react-loader-spinner";
 
@@ -33,11 +33,19 @@ export default function Login(){
         
         const response=await LoginFetch(data)
         
-        setTimeout(() => {
+        setTimeout(async () => {
             setLoading(false);
             if (response.token) {
-                localStorage.setItem('token', response.token)
-                navigate('/users');
+                const responseProfile=await ProfileFetch(response.token)
+                console.log('role',responseProfile.role)
+                if (responseProfile.role==='DeanTeacher' || responseProfile.role==='Dean' || responseProfile.role==='Administrator'){
+                    localStorage.setItem('token', response.token)
+                    navigate('/users');
+                }
+                else{
+                    setErrorMessage('У вас недостаточно прав доступа! Обратитесь к администратору');
+                }
+                
                 // console.log(responseData);
             } 
             else {

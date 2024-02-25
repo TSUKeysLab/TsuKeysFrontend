@@ -25,3 +25,15 @@ export async function LogoutFetch(token){
     
     return response
 }
+export async function ProfileFetch(token){
+
+    const response = await fetch('http://89.111.174.112:8181/user/getProfile', {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        }
+    });
+    
+    return response.json()
+}
