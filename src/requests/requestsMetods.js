@@ -37,3 +37,15 @@ export async function ProfileFetch(token){
     
     return response.json()
 }
+export async function UsersFeedFetch(Url,token){
+
+    const response = await fetch(Url, {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        }
+    });
+    
+    return response.json()
+}

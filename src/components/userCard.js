@@ -6,13 +6,13 @@ export default function UserCard(props){
     const { name, role, email } = props;
 
     let roleClass;
-    if(role==='Студент'){
+    if(role==='Student'){
         roleClass='bg-success'
     }
-    if(role==='Преподаватель'){
+    if(role==='Teacher' || role==='Dean' || role==='DeanTeacher'){
         roleClass='bg-info'
     }
-    if(role==='Пользователь'){
+    if(role==='User' ){
         roleClass='bg-secondary'
     }
     const [showModal, setShowModal] = useState(false);
@@ -30,23 +30,15 @@ export default function UserCard(props){
         <Container className="mt-1">
             <Card className="">
                 <CardBody className="row">
-
-                    {/* <Image
-                        src="https://www.svgrepo.com/show/500470/avatar.svg"
-                        className="img-fluid"
-                        alt="Avatar"
-                        style={{ maxWidth: '10%', maxHeight: '10%' }}
-                    /> */}
-                    {/* <BsFillPersonFill className="fs-4 col"/> */}
                     
-                    <CardTitle className="col-md-2">{name}</CardTitle>
-                    <div className="fw-bold col-md-4">
+                    <div className="fw-bold fs-5 col-md-2 text-start">{name}</div>
+                    <div className="fw-bold fs-5 col-md-4">
                         {email}
                     </div>
                     
                     
                     
-                    <Button className={`ms-auto me-2 col-md-2 fw-bold  text-black ${roleClass} rounded-4 border border-dark`}  onClick={handleShow}>{role}</Button>
+                    <Button className={`ms-auto me-2 col-md-2 fw-bold fs-5 text-black ${roleClass} rounded-4 border border-dark`}  onClick={handleShow}>{role}</Button>
                     <Modal centered show={showModal} onHide={handleClose}>
                         <ModalHeader closeButton>
                             <ModalTitle>Назначить роль</ModalTitle>
