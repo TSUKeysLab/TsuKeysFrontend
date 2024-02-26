@@ -1,34 +1,58 @@
-import React from "react";
-import { Container, Row, Col, Button, Navbar, Image,Dropdown,DropdownButton, CardBody, Card, CardTitle, CardHeader, FormGroup, FormLabel, FormControl, FormSelect    } from 'react-bootstrap';
-import UserCard from '../components/userCard'
-// import { BsPencilFill } from "react-icons/bs";
+import React, { useState, useEffect } from "react";
+import { Container, Card, CardBody, CardHeader, FormGroup, FormLabel, FormControl, FormSelect, Button } from 'react-bootstrap';
+import UserCard from '../components/userCard';
+import { UsersFeedFetch } from "../requests/requestsMetods";
 
-export default function UsersPage(){
-    const data=[
-        {
-            key: '1',
-            name: 'Иванов Иван',
-            role: 'Студент',
-            email: 'exemple@gmail.com'
+export default function UsersPage() {
+    const baseUrl = 'http://89.111.174.112:8181/GetUserInformation?';
+    const [fullname, setFullName] = useState('');
+    const [users, setUsers] = useState([]);
+    const [role,setRole]=useState('')
+    const [flag, setFlag]=useState(true)
+    // let flag=false
+    useEffect(() => {
+        fetchData();
+    }, [fullname,role]);
 
-        },
-        {   
-            key: '2',
-
-            name: 'Чел Человский',
-            role: 'Преподаватель',
-            email: 'exemple@gmail.com'
-        },
-        {   
-            key: '3',
-
-            name: 'Рандом юзер',
-            role: 'Пользователь',
-            email: 'exemple@gmail.com'
+    const fetchData = async () => {
+        // let role = '';
+        let url = baseUrl;
+        if (fullname !== '') {
+            url += 'fullname=' + fullname + '&';
         }
-    ]
-    return(
-        <Container  className="mt-5">
+        if (role !== '') {
+            url += 'role=' + role + '&';
+        }
+        url += 'size=10&page=1';
+
+        //debugger
+        const data = await UsersFeedFetch(url, localStorage.getItem('token'));
+        // debugger
+        if(!data.users){
+            setFlag(false)
+            // debugger
+        }
+        else{
+            setFlag(true)
+        }
+        setUsers(data.users);
+    
+    };
+
+    const handleFullNameChange = (e) => {
+        setFullName(e.target.value);
+    };
+    const handleRoleChange = (e) => {
+        setRole(e.target.value);
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        fetchData();
+    };
+
+    return (
+        <Container className="mt-5">
             <Card>
                 <CardHeader>
                     Фильтры
@@ -36,35 +60,41 @@ export default function UsersPage(){
                 <CardBody className="row">
                     <FormGroup className="col-md-3">
                         <FormLabel>Поиск по имени пользователя</FormLabel>
-                        <FormControl id='NameSearch'></FormControl>
+                        <FormControl value={fullname} onChange={handleFullNameChange}></FormControl>
                     </FormGroup>
                     <FormGroup className="col-md-3">
                         <FormLabel >Сортировка по роли</FormLabel>
-                        <FormSelect id='RoleSort'>
-                            <option>Выбрать роль</option>
+                        <FormSelect value={role} onChange={handleRoleChange}>
+                            <option value=''>Без фильтра</option>
+                            <option value="Administrator">Администратор</option>
+                            <option value="Teacher">Преподаватель</option>
+                            <option value="Dean">Деканат</option>
                             <option value="Student">Студент</option>
-                            <option value="Prepod">Преподаватель</option>  
+                            <option value="User">Неопределенные пользователи</option>
                         </FormSelect>
                     </FormGroup>
-                    <Button className="col-md-2 ms-auto me-3 mt-auto">Применить</Button>
+                    {/* <Button className="col-md-2 ms-auto me-3 mt-auto" onClick={handleSubmit}>Применить</Button> */}
                 </CardBody>
             </Card>
             <Card className="mt-3">
-                <CardBody>
+                <CardBody className="text-center">
                     <div className="me-3 ms-3">
-                        {data.map((user)=>(
-                            <UserCard
-                                key={user.key}
-                                name={user.name}
-                                role={user.role}
-                                email={user.email}
-                            />
-                        ))}
+                        {flag===true  ? (
+                            users.map(user => (
+                                <UserCard
+                                    key={user.userId}
+                                    id={user.userId}
+                                    name={user.fullname}
+                                    role={user.role}
+                                    email={user.email}
+                                />
+                            ))
+                        ) : (
+                            <span className="text-danger fw-bold fs-3">Пользователи не найдены</span>
+                        )}
                     </div>
                 </CardBody>
             </Card>
-            
-            
         </Container>
     );
 }

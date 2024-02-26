@@ -1,52 +1,100 @@
-import React, {useState} from "react";
-import { Form, ModalHeader,ModalTitle,ModalBody, ModalFooter, Container, Row, Col, Button, Navbar, Image,Modal,CardBody, Card, CardTitle, CardHeader, FormGroup, FormLabel, FormControl, FormSelect    } from 'react-bootstrap';
-import { BsFillPersonFill  } from "react-icons/bs";
+import React, {useState, useEffect } from "react";
+import { Form, ModalHeader,ModalTitle,ModalBody, ModalFooter, Container, Row, Col, Button, Navbar, Image,Modal,CardBody, Card, CardTitle, CardHeader, FormGroup, FormLabel, FormControl, FormSelect, Alert    } from 'react-bootstrap';
+// import { BsFillPersonFill  } from "react-icons/bs";
+import { GiveRoleFetch } from "../requests/requestsMetods";
 
 export default function UserCard(props){
-    const { name, role, email } = props;
+    const roleTranslations = {
+        Student: 'Студент',
+        Administrator: 'Администратор',
+        Dean: 'Деканат',
+        DeanTeacher: 'Преподаватель-Деканат',
+        Teacher: 'Преподаватель',
+        User: 'Пользователь'
+    };
+    
+    const { id, name, role, email } = props;
+    const [selectedRole, setSelectedRole] = useState(role);
+    const [selectedRoleColor, setSelectedRoleColor] = useState();
+    const [flag, setFlag] = useState(true);
+    const [roleText, setRoleText] = useState(roleTranslations[role]);
+    const [errorMessage, setErrorMessage] = useState('')
+    useEffect(() => {
+        if (flag === true) {
+            
+            setSelectedRoleColor(selectedRole)
+            setRoleText(roleTranslations[selectedRole])
+            
 
+        }
+        else{
+            setErrorMessage('У вас недостаточно прав для присвоения этой роли пользователю!')
+        }
+    }, [flag, selectedRole])
+
+    let url='http://89.111.174.112:8181/GrantRole?Id='+id+'&Role='
+    
     let roleClass;
-    if(role==='Студент'){
+    if(selectedRoleColor==='Administrator'){
+        roleClass='bg-dark text-white'
+    }
+    if(selectedRoleColor==='Student'){
         roleClass='bg-success'
     }
-    if(role==='Преподаватель'){
+    if(selectedRoleColor==='Dean'){
+        roleClass='bg-primary'
+    }
+    if( selectedRoleColor==='DeanTeacher'){
         roleClass='bg-info'
     }
-    if(role==='Пользователь'){
+    if(selectedRoleColor==='Teacher'){
+        roleClass='bg-warning '
+    }
+    if(selectedRoleColor==='User' ){
         roleClass='bg-secondary'
     }
     const [showModal, setShowModal] = useState(false);
-    const [selectedRole, setSelectedRole] = useState(role);
+    
 
 
     const handleClose = () => setShowModal(false);
     const handleShow = () => setShowModal(true);
 
-    const handleRoleChange = (e) => {
-        setSelectedRole(e.target.value);
+    const handleRoleChange = async (e) => {
+        const value=e.target.value
+        
+        url+=value
+        const response=await GiveRoleFetch(url,localStorage.getItem('token'))
+        if(response.status===200){
+            
+            handleSetFlag(true)   
+        }
+        else{
+            handleSetFlag(false)
+        }
+        setSelectedRole(value);
+        
+    };
+    const handleRoleTextChange = (e) => {
+        setRoleText(e.target.value);
+    };
+    const handleSetFlag = (e) => {
+        setFlag(e);
     };
 
     return (
         <Container className="mt-1">
             <Card className="">
                 <CardBody className="row">
-
-                    {/* <Image
-                        src="https://www.svgrepo.com/show/500470/avatar.svg"
-                        className="img-fluid"
-                        alt="Avatar"
-                        style={{ maxWidth: '10%', maxHeight: '10%' }}
-                    /> */}
-                    {/* <BsFillPersonFill className="fs-4 col"/> */}
                     
-                    <CardTitle className="col-md-2">{name}</CardTitle>
-                    <div className="fw-bold col-md-4">
+                    <div className="fw-bold fs-5 col-md-3 text-start">{name}</div>
+                    <div className="fw-bold fs-5 col-md-3 text-start ">
                         {email}
                     </div>
                     
                     
                     
-                    <Button className={`ms-auto me-2 col-md-2 fw-bold  text-black ${roleClass} rounded-4 border border-dark`}  onClick={handleShow}>{role}</Button>
+                    <Button className={`ms-auto me-3  col-md-2 fw-bold fs-5 text-black ${roleClass} rounded-4 border border-dark`}  onClick={handleShow}>{roleText}</Button>
                     <Modal centered show={showModal} onHide={handleClose}>
                         <ModalHeader closeButton>
                             <ModalTitle>Назначить роль</ModalTitle>
@@ -55,20 +103,34 @@ export default function UserCard(props){
                             <Form>
                                 <FormGroup controlId="roleSelect">
                                     <FormLabel>Выберите роль:</FormLabel>
-                                    <FormControl as="select" value={selectedRole} onChange={handleRoleChange}>
-                                        <option value="Студент">Студент</option>
-                                        <option value="Преподаватель">Преподаватель</option>
+                                    <FormControl as="select" value={selectedRole} onChange={(e)=>{
+                                            handleRoleChange(e)
+                                            
+                                            
+                                            
+                                        }}>
+                                        <option value="Administrator">Администратор</option>
+                                        <option value="Student">Студент</option>
+                                        <option value="Teacher">Преподаватель</option>
+                                        <option value="Dean">Деканат</option>
+                                        <option value="DeanTeacher">Преподаватель-Деканат</option>
+                                        <option value="User">Пользователь</option>
                                     </FormControl>
                                 </FormGroup>
                             </Form>
                         </ModalBody>
-                        <ModalFooter>
-                            <Button variant="secondary" onClick={handleClose}>
-                                Закрыть
-                            </Button>
-                            <Button variant="primary" onClick={handleClose}>
-                                Сохранить
-                            </Button>
+                        <ModalFooter className="d-flex">
+                            <div className="flex-grow-1">
+                                {flag===false ? (
+                                    <Alert className='' variant="danger">{errorMessage}</Alert>
+                                ) : (
+                                    <></>
+                                )}
+                            </div>
+                            
+                            
+                            
+                            
                         </ModalFooter>
                     </Modal>
 
