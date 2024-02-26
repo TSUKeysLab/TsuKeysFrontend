@@ -12,13 +12,14 @@ export default function UserCard(props){
         Teacher: 'Преподаватель',
         User: 'Пользователь'
     };
-
-    const { name, role, email } = props;
+    
+    const { id, name, role, email } = props;
     const [selectedRole, setSelectedRole] = useState(role);
     const [roleText, setRoleText] = useState(roleTranslations[role]);
     
     
-
+    let url='http://89.111.174.112:8181/GrantRole?Id='+id+'&Role='
+    
     let roleClass;
 
     if(selectedRole==='Student'){
@@ -40,8 +41,13 @@ export default function UserCard(props){
     const handleClose = () => setShowModal(false);
     const handleShow = () => setShowModal(true);
 
-    const handleRoleChange = (e) => {
-        setSelectedRole(e.target.value);
+    const handleRoleChange = async (e) => {
+        const value=e.target.value
+        setSelectedRole(value);
+        url+=value
+        debugger
+        const response=await GiveRoleFetch(url,localStorage.getItem('token'))
+
     };
     const handleRoleTextChange = (e) => {
         setRoleText(e.target.value);
@@ -69,6 +75,7 @@ export default function UserCard(props){
                                 <FormGroup controlId="roleSelect">
                                     <FormLabel>Выберите роль:</FormLabel>
                                     <FormControl as="select" value={selectedRole} onChange={(e)=>{
+                                            
                                             handleRoleChange(e)
                                             handleRoleTextChange(e)
                                             setRoleText(roleTranslations[e.target.value])
