@@ -1,22 +1,40 @@
 import React, {useState} from "react";
 import { Form, ModalHeader,ModalTitle,ModalBody, ModalFooter, Container, Row, Col, Button, Navbar, Image,Modal,CardBody, Card, CardTitle, CardHeader, FormGroup, FormLabel, FormControl, FormSelect    } from 'react-bootstrap';
-import { BsFillPersonFill  } from "react-icons/bs";
+// import { BsFillPersonFill  } from "react-icons/bs";
+import { GiveRoleFetch } from "../requests/requestsMetods";
 
 export default function UserCard(props){
+    const roleTranslations = {
+        Student: 'Студент',
+        Administrator: 'Администратор',
+        Dean: 'Деканат',
+        DeanTeacher: 'Деканат',
+        Teacher: 'Преподаватель',
+        User: 'Пользователь'
+    };
+
     const { name, role, email } = props;
+    const [selectedRole, setSelectedRole] = useState(role);
+    const [roleText, setRoleText] = useState(roleTranslations[role]);
+    
+    
 
     let roleClass;
-    if(role==='Student'){
+
+    if(selectedRole==='Student'){
         roleClass='bg-success'
     }
-    if(role==='Teacher' || role==='Dean' || role==='DeanTeacher'){
+    if(selectedRole==='Dean' || role==='DeanTeacher'){
         roleClass='bg-info'
     }
-    if(role==='User' ){
+    if(selectedRole==='Teacher'){
+        roleClass='bg-warning '
+    }
+    if(selectedRole==='User' ){
         roleClass='bg-secondary'
     }
     const [showModal, setShowModal] = useState(false);
-    const [selectedRole, setSelectedRole] = useState(role);
+    
 
 
     const handleClose = () => setShowModal(false);
@@ -25,20 +43,23 @@ export default function UserCard(props){
     const handleRoleChange = (e) => {
         setSelectedRole(e.target.value);
     };
+    const handleRoleTextChange = (e) => {
+        setRoleText(e.target.value);
+    };
 
     return (
         <Container className="mt-1">
             <Card className="">
                 <CardBody className="row">
                     
-                    <div className="fw-bold fs-5 col-md-2 text-start">{name}</div>
-                    <div className="fw-bold fs-5 col-md-4">
+                    <div className="fw-bold fs-5 col-md-3 text-start">{name}</div>
+                    <div className="fw-bold fs-5 col-md-3 text-start ">
                         {email}
                     </div>
                     
                     
                     
-                    <Button className={`ms-auto me-2 col-md-2 fw-bold fs-5 text-black ${roleClass} rounded-4 border border-dark`}  onClick={handleShow}>{role}</Button>
+                    <Button className={`ms-auto me-3  col-md-2 fw-bold fs-5 text-black ${roleClass} rounded-4 border border-dark`}  onClick={handleShow}>{roleText}</Button>
                     <Modal centered show={showModal} onHide={handleClose}>
                         <ModalHeader closeButton>
                             <ModalTitle>Назначить роль</ModalTitle>
@@ -47,9 +68,17 @@ export default function UserCard(props){
                             <Form>
                                 <FormGroup controlId="roleSelect">
                                     <FormLabel>Выберите роль:</FormLabel>
-                                    <FormControl as="select" value={selectedRole} onChange={handleRoleChange}>
-                                        <option value="Студент">Студент</option>
-                                        <option value="Преподаватель">Преподаватель</option>
+                                    <FormControl as="select" value={selectedRole} onChange={(e)=>{
+                                            handleRoleChange(e)
+                                            handleRoleTextChange(e)
+                                            setRoleText(roleTranslations[e.target.value])
+                                        }}>
+                                        <option value="Student">Студент</option>
+                                        <option value="Teacher">Преподаватель</option>
+                                        <option value="Dean">Деканат</option>
+                                        <option value="Administrator">Администратор</option>
+                                        <option value="User">Пользователь</option>
+                                        {/* <option value="Teacher">Преподаватель</option> */}
                                     </FormControl>
                                 </FormGroup>
                             </Form>

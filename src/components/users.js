@@ -7,14 +7,15 @@ export default function UsersPage() {
     const baseUrl = 'http://89.111.174.112:8181/GetUserInformation?';
     const [fullname, setFullName] = useState('');
     const [users, setUsers] = useState([]);
+    const [role,setRole]=useState('')
     const [flag, setFlag]=useState(true)
     // let flag=false
     useEffect(() => {
         fetchData();
-    }, [fullname]);
+    }, [fullname,role]);
 
     const fetchData = async () => {
-        let role = '';
+        // let role = '';
         let url = baseUrl;
         if (fullname !== '') {
             url += 'fullname=' + fullname + '&';
@@ -22,11 +23,11 @@ export default function UsersPage() {
         if (role !== '') {
             url += 'role=' + role + '&';
         }
-        url += 'size=5&page=1';
+        url += 'size=10&page=1';
 
         //debugger
         const data = await UsersFeedFetch(url, localStorage.getItem('token'));
-        debugger
+        // debugger
         if(!data.users){
             setFlag(false)
             // debugger
@@ -40,6 +41,9 @@ export default function UsersPage() {
 
     const handleFullNameChange = (e) => {
         setFullName(e.target.value);
+    };
+    const handleRoleChange = (e) => {
+        setRole(e.target.value);
     };
 
     const handleSubmit = (e) => {
@@ -60,13 +64,16 @@ export default function UsersPage() {
                     </FormGroup>
                     <FormGroup className="col-md-3">
                         <FormLabel >Сортировка по роли</FormLabel>
-                        <FormSelect id='RoleSort'>
-                            <option>Выбрать роль</option>
+                        <FormSelect value={role} onChange={handleRoleChange}>
+                            <option value=''>Без фильтра</option>
+                            <option value="Administrator">Администратор</option>
+                            <option value="Teacher">Преподаватель</option>
+                            <option value="Dean">Деканат</option>
                             <option value="Student">Студент</option>
-                            <option value="Prepod">Преподаватель</option>
+                            <option value="User">Неопределенные пользователи</option>
                         </FormSelect>
                     </FormGroup>
-                    <Button className="col-md-2 ms-auto me-3 mt-auto" onClick={handleSubmit}>Применить</Button>
+                    {/* <Button className="col-md-2 ms-auto me-3 mt-auto" onClick={handleSubmit}>Применить</Button> */}
                 </CardBody>
             </Card>
             <Card className="mt-3">

@@ -1,7 +1,7 @@
 import React from "react";
 
 export async function LoginFetch(data){
-    // try {
+
     const response = await fetch('http://89.111.174.112:8181/user/login', {
         method: 'POST',
         headers: {
@@ -45,6 +45,18 @@ export async function UsersFeedFetch(Url,token){
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
         }
+    });
+    
+    return response.json()
+}
+export async function GiveRoleFetch(Url,token){
+
+    const response = await fetch(Url, {
+        method: 'PUT',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        },
     });
     
     return response.json()
