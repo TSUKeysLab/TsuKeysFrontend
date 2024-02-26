@@ -44,7 +44,7 @@ export default function UserCard(props){
     if(selectedRoleColor==='Dean'){
         roleClass='bg-primary'
     }
-    if( role==='DeanTeacher'){
+    if( selectedRoleColor==='DeanTeacher'){
         roleClass='bg-info'
     }
     if(selectedRoleColor==='Teacher'){
@@ -109,12 +109,12 @@ export default function UserCard(props){
                                             
                                             
                                         }}>
+                                        <option value="Administrator">Администратор</option>
                                         <option value="Student">Студент</option>
                                         <option value="Teacher">Преподаватель</option>
                                         <option value="Dean">Деканат</option>
-                                        <option value="Administrator">Администратор</option>
-                                        <option value="User">Пользователь</option>
                                         <option value="DeanTeacher">Преподаватель-Деканат</option>
+                                        <option value="User">Пользователь</option>
                                     </FormControl>
                                 </FormGroup>
                             </Form>
