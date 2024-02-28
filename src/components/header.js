@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Button, Navbar, Image, Dropdown, DropdownButton } from 'react-bootstrap';
+import { Container,NavbarToggle, Row, Col, Button, Navbar, Image, Dropdown, DropdownButton, NavbarCollapse, NavbarBrand, Nav } from 'react-bootstrap';
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { LogoutFetch } from "../requests/requestsMetods";
 
@@ -40,11 +40,11 @@ function Header() {
             navigate('/login')
         }
     };
-
+    
     return (
-        <Navbar className="bg-dark shadow">
-            <div className="py-1 d-flex align-items-center ms-5 flex-grow-1">
-                <Link to="/" className="text-decoration-none">
+        <Navbar className="bg-dark shadow " expand='lg'>
+            <Container fluid className="me-3">
+                <Link to="/" className="text-decoration-none ms-2">
                     <Image
                         src="https://facultetus.ru/images/universities/fe528b970af8e7a11ee44374ecd12e24.png"
                         width="35"
@@ -52,46 +52,72 @@ function Header() {
                         style={{ filter: 'brightness(0) invert(1)' }}
                         className="mb-2"
                     />
-                    <span className="text-white fs-5 ms-1">TSU.Ключи</span>
+                    <NavbarBrand className="ms-2 text-white">
+                        TSU.Ключи
+                    </NavbarBrand>
                 </Link>
+                
+                <NavbarToggle className="bg-light"/>
+                <NavbarCollapse >
+                    <Nav className="w-100">
+                    {
+                        token ? (
+                            <>
+                                <Link to='' className="text-white ms-5 text-decoration-none" style={{ opacity: 0.7 }}>
+                                    {headerText === "Заявки" ? <span className='text-primary'>Заявки</span> : "Заявки"}
 
-                {/* <Link to='' className="text-white ms-5 text-decoration-none" style={{ opacity: 0.7 }}>
-                    {headerText === "Заявки" ? <span className='text-primary'>Заявки</span> : "Заявки"}
+                                </Link>
+                                <Link to='/users' className="text-white ms-5 text-decoration-none" style={{ opacity: 0.7 }}>
+                                    {headerText === "Пользователи" ? <span className='text-primary'>Пользователи</span> : "Пользователи"}
+                                </Link>
+                                <Link to='' className="text-white ms-5 text-decoration-none" style={{ opacity: 0.7 }}>
+                                    {headerText === "Ключи" ? <span className='text-primary'>Ключи</span> : "Ключи"}
 
-                </Link>
-                <Link to='/users' className="text-white ms-5 text-decoration-none" style={{ opacity: 0.7 }}>
-                    {headerText === "Пользователи" ? <span className='text-primary'>Пользователи</span> : "Пользователи"}
-                </Link>
-                <Link to='' className="text-white ms-5 text-decoration-none" style={{ opacity: 0.7 }}>
-                    {headerText === "Ключи" ? <span className='text-primary'>Ключи</span> : "Ключи"}
+                                </Link>
+                                <span className="text-white  ms-lg-auto ms-5 mt-lg-0 mt-3" style={{ opacity: 0.7, cursor: 'pointer' }} onClick={handleLogout}>Выход</span>
 
-                </Link> */}
-                {
-                    token ? (
-                        <div className="py-1 d-flex align-items-center ms-5 flex-grow-1">
-                            <Link to='' className="text-white ms-5 text-decoration-none" style={{ opacity: 0.7 }}>
-                                {headerText === "Заявки" ? <span className='text-primary'>Заявки</span> : "Заявки"}
-
+                            </>
+                            
+                        ) : <Link to="/login" className="text-white ms-auto me-lg-5 text-decoration-none" style={{ opacity: 0.7 }}>
+                                {headerText === "Вход" ? <span className='text-primary'>Вход</span> : "Вход"}
                             </Link>
-                            <Link to='/users' className="text-white ms-5 text-decoration-none" style={{ opacity: 0.7 }}>
-                                {headerText === "Пользователи" ? <span className='text-primary'>Пользователи</span> : "Пользователи"}
-                            </Link>
-                            <Link to='' className="text-white ms-5 text-decoration-none" style={{ opacity: 0.7 }}>
-                                {headerText === "Ключи" ? <span className='text-primary'>Ключи</span> : "Ключи"}
+                    }
+                    </Nav>
+                </NavbarCollapse>
+            </Container>
+            {/* <div className="">
+                
+                <NavbarToggle  className="ms-auto bg-light "  />
+                <NavbarCollapse className="">
+                    <div>
 
-                            </Link>
-                            <span className="text-white ms-auto me-5 text-decoration-none" style={{ opacity: 0.7, cursor: 'pointer' }} onClick={handleLogout}>Выход</span>
+                    
+                        {
+                            token ? (
+                                <>
+                                    <Link to='' className="text-white ms-5 text-decoration-none" style={{ opacity: 0.7 }}>
+                                        {headerText === "Заявки" ? <span className='text-primary'>Заявки</span> : "Заявки"}
 
-                        </div>
-                        // <Link to="/login" className="text-white ms-auto me-5 text-decoration-none" style={{ opacity: 0.7 }} onClick={handleLogout}>
-                        //     Выход
-                        // </Link>
-                    ) : <Link to="/login" className="text-white ms-auto me-5 text-decoration-none" style={{ opacity: 0.7 }}>
-                            {headerText === "Вход" ? <span className='text-primary'>Вход</span> : "Вход"}
-                        </Link>
-                }
-                        
-            </div>
+                                    </Link>
+                                    <Link to='/users' className="text-white ms-5 text-decoration-none" style={{ opacity: 0.7 }}>
+                                        {headerText === "Пользователи" ? <span className='text-primary'>Пользователи</span> : "Пользователи"}
+                                    </Link>
+                                    <Link to='' className="text-white ms-5 text-decoration-none" style={{ opacity: 0.7 }}>
+                                        {headerText === "Ключи" ? <span className='text-primary'>Ключи</span> : "Ключи"}
+
+                                    </Link>
+                                    <span className="text-white ms-auto me-5 text-decoration-none" style={{ opacity: 0.7, cursor: 'pointer' }} onClick={handleLogout}>Выход</span>
+
+                                </>
+                                
+                            ) : <Link to="/login" className="text-white ms-auto me-5 text-decoration-none" style={{ opacity: 0.7 }}>
+                                    {headerText === "Вход" ? <span className='text-primary'>Вход</span> : "Вход"}
+                                </Link>
+                        }
+                    </div>
+                </NavbarCollapse>
+            </div> */}
+            
         </Navbar>
     );
 }

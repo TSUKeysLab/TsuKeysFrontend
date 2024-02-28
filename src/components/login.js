@@ -43,13 +43,13 @@ export default function Login(){
                     navigate('/users');
                 }
                 else{
-                    setErrorMessage('У вас недостаточно прав доступа! Обратитесь к администратору');
+                    setErrorMessage('У вас недостаточно прав доступа! Обратитесь к администратору!');
                 }
                 
                 // console.log(responseData);
             } 
             else {
-                setErrorMessage('Неправильный пароль или email');
+                setErrorMessage('Неправильный пароль или email!');
             }
         }, 1000);
         
@@ -79,7 +79,7 @@ export default function Login(){
                             </div>
                         ) :<Button type="submit" className="mt-4 mb-3 text-center w-100">Войти</Button>}
 
-                        {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
+                        {errorMessage && <Alert variant="danger" className="text-center">{errorMessage}</Alert>}
                     </Form>
                 </CardBody>
             </Card>

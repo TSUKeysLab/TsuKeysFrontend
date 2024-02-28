@@ -65,7 +65,7 @@ export default function UsersPage() {
                     <FormGroup className="col-md-3">
                         <FormLabel >Сортировка по роли</FormLabel>
                         <FormSelect value={role} onChange={handleRoleChange}>
-                            <option value=''>Без фильтра</option>
+                            <option value=''>--</option>
                             <option value="Administrator">Администратор</option>
                             <option value="Teacher">Преподаватель</option>
                             <option value="Dean">Деканат</option>
