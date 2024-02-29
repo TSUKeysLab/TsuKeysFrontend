@@ -85,38 +85,6 @@ function Header() {
                     </Nav>
                 </NavbarCollapse>
             </Container>
-            {/* <div className="">
-                
-                <NavbarToggle  className="ms-auto bg-light "  />
-                <NavbarCollapse className="">
-                    <div>
-
-                    
-                        {
-                            token ? (
-                                <>
-                                    <Link to='' className="text-white ms-5 text-decoration-none" style={{ opacity: 0.7 }}>
-                                        {headerText === "Заявки" ? <span className='text-primary'>Заявки</span> : "Заявки"}
-
-                                    </Link>
-                                    <Link to='/users' className="text-white ms-5 text-decoration-none" style={{ opacity: 0.7 }}>
-                                        {headerText === "Пользователи" ? <span className='text-primary'>Пользователи</span> : "Пользователи"}
-                                    </Link>
-                                    <Link to='' className="text-white ms-5 text-decoration-none" style={{ opacity: 0.7 }}>
-                                        {headerText === "Ключи" ? <span className='text-primary'>Ключи</span> : "Ключи"}
-
-                                    </Link>
-                                    <span className="text-white ms-auto me-5 text-decoration-none" style={{ opacity: 0.7, cursor: 'pointer' }} onClick={handleLogout}>Выход</span>
-
-                                </>
-                                
-                            ) : <Link to="/login" className="text-white ms-auto me-5 text-decoration-none" style={{ opacity: 0.7 }}>
-                                    {headerText === "Вход" ? <span className='text-primary'>Вход</span> : "Вход"}
-                                </Link>
-                        }
-                    </div>
-                </NavbarCollapse>
-            </div> */}
             
         </Navbar>
     );

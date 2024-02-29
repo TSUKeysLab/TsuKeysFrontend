@@ -9,13 +9,11 @@ export default function UsersPage() {
     const [users, setUsers] = useState([]);
     const [role,setRole]=useState('')
     const [flag, setFlag]=useState(true)
-    // let flag=false
     useEffect(() => {
         fetchData();
     }, [fullname,role]);
 
     const fetchData = async () => {
-        // let role = '';
         let url = baseUrl;
         if (fullname !== '') {
             url += 'fullname=' + fullname + '&';
@@ -25,12 +23,10 @@ export default function UsersPage() {
         }
         url += 'size=10&page=1';
 
-        //debugger
         const data = await UsersFeedFetch(url, localStorage.getItem('token'));
-        // debugger
+        
         if(!data.users){
             setFlag(false)
-            // debugger
         }
         else{
             setFlag(true)
@@ -73,7 +69,6 @@ export default function UsersPage() {
                             <option value="User">Неопределенные пользователи</option>
                         </FormSelect>
                     </FormGroup>
-                    {/* <Button className="col-md-2 ms-auto me-3 mt-auto" onClick={handleSubmit}>Применить</Button> */}
                 </CardBody>
             </Card>
             <Card className="mt-3">
