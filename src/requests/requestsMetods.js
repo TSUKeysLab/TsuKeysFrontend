@@ -58,6 +58,5 @@ export async function GiveRoleFetch(Url,token){
             'Content-Type': 'application/json'
         },
     });
-    // debugger
     return response
 }
