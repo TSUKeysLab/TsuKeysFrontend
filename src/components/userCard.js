@@ -94,7 +94,7 @@ export default function UserCard(props){
                     
                     
                     
-                    <Button className={`ms-auto me-3  col-md-2 fw-bold fs-5 text-black ${roleClass} rounded-4 border border-dark`}  onClick={handleShow}>{roleText}</Button>
+                    <Button className={`ms-auto me-3  col-md-2  fs-5 text-black ${roleClass} rounded-4 border border-dark`}  onClick={handleShow}>{roleText}</Button>
                     <Modal centered show={showModal} onHide={handleClose}>
                         <ModalHeader closeButton>
                             <ModalTitle>Назначить роль</ModalTitle>
