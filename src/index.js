@@ -5,12 +5,14 @@ import { BrowserRouter } from 'react-router-dom';
 import Header from './components/header';
 import Login from './components/login';
 import Router from './router/router';
+import {QueryClient, QueryClientProvider} from "react-query";
 
+const queryClient = new QueryClient()
 
 createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
+  <QueryClientProvider client={queryClient}>
     <BrowserRouter>
       <Router />
     </BrowserRouter>
-  </React.StrictMode>
+  </QueryClientProvider>
 );

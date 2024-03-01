@@ -34,7 +34,7 @@ export async function ProfileFetch(token){
             'Content-Type': 'application/json'
         }
     });
-    
+    // debugger
     return response.json()
 }
 export async function UsersFeedFetch(Url,token){
