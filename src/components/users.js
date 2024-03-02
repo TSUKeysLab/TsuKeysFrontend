@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Container, Card, CardBody, CardHeader, FormGroup, FormLabel, FormControl, FormSelect, Button } from 'react-bootstrap';
 import UserCard from '../components/userCard';
 import { UsersFeedFetch } from "../requests/requestsMetods";
+import { useNavigate } from "react-router-dom";
 
 export default function UsersPage() {
     const baseUrl = 'http://89.111.174.112:8181/GetUserInformation?';
@@ -9,6 +10,8 @@ export default function UsersPage() {
     const [users, setUsers] = useState([]);
     const [role,setRole]=useState('')
     const [flag, setFlag]=useState(true)
+    // const navigate=useNavigate
+
     useEffect(() => {
         fetchData();
     }, [fullname,role]);
@@ -22,6 +25,8 @@ export default function UsersPage() {
             url += 'role=' + role + '&';
         }
         url += 'size=10&page=1';
+
+
 
         const data = await UsersFeedFetch(url, localStorage.getItem('token'));
         

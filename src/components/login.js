@@ -40,6 +40,7 @@ export default function Login(){
                 console.log('role',responseProfile.role)
                 if (responseProfile.role==='DeanTeacher' || responseProfile.role==='Dean' || responseProfile.role==='Administrator'){
                     localStorage.setItem('token', response.token)
+                    localStorage.setItem('AuthFlag', JSON.stringify(true))
                     navigate('/users');
                 }
                 else{

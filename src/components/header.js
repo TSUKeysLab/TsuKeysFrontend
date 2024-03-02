@@ -2,13 +2,16 @@ import React, { useState, useEffect } from "react";
 import { Container,NavbarToggle, Row, Col, Button, Navbar, Image, Dropdown, DropdownButton, NavbarCollapse, NavbarBrand, Nav } from 'react-bootstrap';
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { LogoutFetch } from "../requests/requestsMetods";
+import {observer} from "mobx-react-lite";
 
-function Header() {
+export const Header=observer(()=>{
     const location = useLocation();
     const [headerText, setHeaderText] = useState("");
+    const navigate = useNavigate();
+
+
 
     useEffect(() => {
-        
         switch (location.pathname) {
             case "/users":
                 setHeaderText("Пользователи");
@@ -22,7 +25,6 @@ function Header() {
             case "/requests":
                 setHeaderText("Заявки");
                 break;
-            
             default:
                 setHeaderText("");
                 break;
@@ -30,7 +32,7 @@ function Header() {
     }, [location]);
 
     const token=localStorage.getItem('token')
-    const navigate = useNavigate();
+
 
     const handleLogout = async (e) => {
         e.preventDefault()
@@ -40,7 +42,8 @@ function Header() {
             navigate('/login')
         }
     };
-    
+        
+
     return (
         <Navbar className="bg-dark shadow " expand='lg'>
             <Container fluid className="me-3">
@@ -88,6 +91,6 @@ function Header() {
             
         </Navbar>
     );
-}
+})
 
-export default Header;
+// export default Header;
