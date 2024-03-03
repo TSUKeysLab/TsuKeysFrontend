@@ -36,22 +36,22 @@ export default function UserCard(props){
     
     let roleClass;
     if(selectedRoleColor==='Administrator'){
-        roleClass='bg-dark text-white'
+        roleClass='#659dbd'
     }
     if(selectedRoleColor==='Student'){
-        roleClass='bg-success'
+        roleClass='#5cdb95'
     }
     if(selectedRoleColor==='Dean'){
-        roleClass='bg-primary'
+        roleClass='#bc968a'
     }
     if( selectedRoleColor==='DeanTeacher'){
-        roleClass='bg-info'
+        roleClass='#daad86'
     }
     if(selectedRoleColor==='Teacher'){
-        roleClass='bg-warning '
+        roleClass='#fbeec1'
     }
     if(selectedRoleColor==='User' ){
-        roleClass='bg-secondary'
+        roleClass='#c2cad0'
     }
     const [showModal, setShowModal] = useState(false);
     
@@ -94,7 +94,7 @@ export default function UserCard(props){
                     
                     
                     
-                    <Button className={`ms-auto me-3  col-md-2  fs-5 text-black ${roleClass} rounded-4 border border-dark`}  onClick={handleShow}>{roleText}</Button>
+                    <Button className={`ms-auto me-3 border-0 col-md-2  fs-5 text-black  rounded-4 border border-dark`} style={{backgroundColor: roleClass}} onClick={handleShow}>{roleText}</Button>
                     <Modal centered show={showModal} onHide={handleClose}>
                         <ModalHeader closeButton>
                             <ModalTitle>Назначить роль</ModalTitle>

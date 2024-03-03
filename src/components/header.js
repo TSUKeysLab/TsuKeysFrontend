@@ -45,7 +45,7 @@ export const Header=observer(()=>{
         
 
     return (
-        <Navbar className="bg-dark shadow " expand='lg'>
+        <Navbar className="bg-dark shadow fixed-top " expand='lg'>
             <Container fluid className="me-3">
                 <Link to="/" className="text-decoration-none ms-2">
                     <Image

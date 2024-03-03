@@ -24,7 +24,7 @@ export default function UsersPage() {
         if (role !== '') {
             url += 'role=' + role + '&';
         }
-        url += 'size=10&page=1';
+        url += 'size=100&page=1';
 
 
 
@@ -53,7 +53,7 @@ export default function UsersPage() {
     };
 
     return (
-        <Container className="mt-5">
+        <Container className="" style={{marginTop: '8%'}}>
             <Card>
                 <CardHeader>
                     Фильтры
@@ -70,6 +70,7 @@ export default function UsersPage() {
                             <option value="Administrator">Администратор</option>
                             <option value="Teacher">Преподаватель</option>
                             <option value="Dean">Деканат</option>
+                            <option value="DeanTeacher">Преподаватель-Деканат</option>
                             <option value="Student">Студент</option>
                             <option value="User">Неопределенные пользователи</option>
                         </FormSelect>
