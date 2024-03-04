@@ -18,8 +18,8 @@ export const AuthLayout=observer(({children})=>{
             <Navigate to={'/login'}/>
         )
     }
-    if(AuthStore.AuthFlag===false){
-        
+    if(localStorage.getItem('AuthFlag')===null){
+        debugger
         return(
             <Navigate to={'/login'}/>
         )

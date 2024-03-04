@@ -57,7 +57,7 @@ export default function Login(){
     }
     
     return (
-        <Container style={{marginTop: '8%'}} className="d-flex justify-content-center align-items-center">
+        <Container style={{marginTop: '110px'}} className="d-flex justify-content-center align-items-center">
             <Card className="col-md-6 shadow">
                 <CardBody>
                     <CardTitle className="text-center fs-3">Вход</CardTitle>

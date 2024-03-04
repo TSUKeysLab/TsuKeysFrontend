@@ -19,7 +19,7 @@ class AuthStore{
 
     async AuthChecking(){
         const response=await ProfileFetch(localStorage.getItem('token'))
-        
+        debugger
         if(response.role){
             
             this.setAuth(true)
