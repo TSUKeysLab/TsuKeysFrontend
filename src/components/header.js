@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Container,NavbarToggle, Row, Col, Button, Navbar, Image, Dropdown, DropdownButton, NavbarCollapse, NavbarBrand, Nav } from 'react-bootstrap';
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { LogoutFetch } from "../requests/requestsMetods";
+import { LogoutFetch, ProfileFetch } from "../requests/requestsMetods";
 import {observer} from "mobx-react-lite";
 
 export const Header=observer(()=>{
     const location = useLocation();
     const [headerText, setHeaderText] = useState("");
     const navigate = useNavigate();
+    const [Name, setName] = useState(null);
 
 
 
@@ -33,7 +34,23 @@ export const Header=observer(()=>{
 
     const token=localStorage.getItem('token')
 
+    
 
+    useEffect(() => {
+
+        const getProfile = async () => {
+
+            if (token) {
+                const profileResponse = await ProfileFetch(token);
+                
+                if(profileResponse.fullname){
+                    setName(profileResponse.fullname);
+                }
+            }
+        };
+
+        getProfile();
+    }, []);
     const handleLogout = async (e) => {
         e.preventDefault()
         const response=await LogoutFetch(token)
@@ -45,7 +62,7 @@ export const Header=observer(()=>{
         
 
     return (
-        <Navbar className="bg-dark shadow " expand='lg'>
+        <Navbar className="bg-dark shadow fixed-top " expand='lg'>
             <Container fluid className="me-3">
                 <Link to="/" className="text-decoration-none ms-2">
                     <Image
@@ -77,7 +94,13 @@ export const Header=observer(()=>{
                                     {headerText === "Ключи" ? <span className='text-primary'>Ключи</span> : "Ключи"}
 
                                 </Link>
-                                <span className="text-white  ms-lg-auto ms-5 mt-lg-0 mt-3" style={{ opacity: 0.7, cursor: 'pointer' }} onClick={handleLogout}>Выход</span>
+                                <div className="text-white  ms-lg-auto ms-5 mt-lg-0 mt-3">
+
+                                
+                                    {Name}
+                                    <span className="ms-5" style={{ opacity: 0.7, cursor: 'pointer' }} onClick={handleLogout}>Выход</span>
+                                </div>
+                                
 
                             </>
                             

@@ -11,14 +11,14 @@ export const AuthLayout=observer(({children})=>{
     const {data, isLoading, error}=useQuery(['AuthChecking'], () => AuthStore.AuthChecking(),{
 
     })
-    debugger
+    
     if(error){
-        debugger
+        
         return(
             <Navigate to={'/login'}/>
         )
     }
-    if(AuthStore.AuthFlag===false){
+    if(localStorage.getItem('AuthFlag')===null){
         debugger
         return(
             <Navigate to={'/login'}/>
