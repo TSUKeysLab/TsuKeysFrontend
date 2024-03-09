@@ -60,3 +60,77 @@ export async function GiveRoleFetch(Url,token){
     });
     return response
 }
+export async function RequestsFeedFetch(Url,token){
+
+    const response = await fetch(Url, {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        }
+    });
+    
+    return response.json()
+}
+export async function RejectRequestFetch(Url,token){
+
+    const response = await fetch(Url, {
+        method: 'PUT',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        }
+    });
+    
+    return response
+}
+export async function ApproveRequestFetch(Url,token){
+
+    const response = await fetch(Url, {
+        method: 'PUT',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        }
+    });
+    
+    return response
+}
+export async function KeysFeedFetch(Url,token){
+
+    const response = await fetch(Url, {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        }
+    });
+    
+    return response.json()
+}
+export async function CreateKeyFetch(data, token){
+
+    const response = await fetch('http://89.111.174.112:8181/key/create', {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    });
+    
+    return response
+}
+export async function DeleteKeyFetch(url, token){
+
+    const response = await fetch(url, {
+        method: 'DELETE',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        },
+        
+    });
+    
+    return response
+}

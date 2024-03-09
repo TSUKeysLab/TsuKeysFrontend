@@ -60,13 +60,12 @@ export default function UsersPage() {
                 </CardHeader>
                 <CardBody className="row">
                     <FormGroup className="col-md-3">
-                        <FormLabel>Поиск по имени пользователя</FormLabel>
-                        <FormControl value={fullname} onChange={handleFullNameChange}></FormControl>
+                        <FormControl placeholder="Имя пользователя" value={fullname} onChange={handleFullNameChange}></FormControl>
                     </FormGroup>
                     <FormGroup className="col-md-3">
-                        <FormLabel >Сортировка по роли</FormLabel>
+                        {/* <FormLabel >Сортировка по роли</FormLabel> */}
                         <FormSelect value={role} onChange={handleRoleChange}>
-                            <option value=''>--</option>
+                            <option value=''>Выбрать роль</option>
                             <option value="Administrator">Администратор</option>
                             <option value="Teacher">Преподаватель</option>
                             <option value="Dean">Деканат</option>
@@ -77,7 +76,7 @@ export default function UsersPage() {
                     </FormGroup>
                 </CardBody>
             </Card>
-            <Card className="mt-3">
+            <Card className="mt-2">
                 <CardBody className="text-center">
                     <div className="me-3 ms-3">
                         {flag===true  ? (

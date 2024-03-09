@@ -83,14 +83,14 @@ export const Header=observer(()=>{
                     {
                         token ? (
                             <>
-                                <Link to='' className="text-white ms-5 text-decoration-none" style={{ opacity: 0.7 }}>
+                                <Link to='/requests' className="text-white ms-5 text-decoration-none" style={{ opacity: 0.7 }}>
                                     {headerText === "Заявки" ? <span className='text-primary'>Заявки</span> : "Заявки"}
 
                                 </Link>
                                 <Link to='/users' className="text-white ms-5 text-decoration-none" style={{ opacity: 0.7 }}>
                                     {headerText === "Пользователи" ? <span className='text-primary'>Пользователи</span> : "Пользователи"}
                                 </Link>
-                                <Link to='' className="text-white ms-5 text-decoration-none" style={{ opacity: 0.7 }}>
+                                <Link to='/keys' className="text-white ms-5 text-decoration-none" style={{ opacity: 0.7 }}>
                                     {headerText === "Ключи" ? <span className='text-primary'>Ключи</span> : "Ключи"}
 
                                 </Link>
