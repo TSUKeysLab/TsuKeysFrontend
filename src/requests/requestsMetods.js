@@ -134,3 +134,15 @@ export async function DeleteKeyFetch(url, token){
     
     return response
 }
+export async function RequestsBackFeedFetch(Url,token){
+
+    const response = await fetch(Url, {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        }
+    });
+    
+    return response.json()
+}

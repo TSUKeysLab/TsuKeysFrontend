@@ -13,6 +13,8 @@ export default  function KeysPage() {
     const [keyNum, setKeyNum] = useState('');
     const [flag, setFlag]=useState(true)
     const [flagKey, setFlagKey]=useState(true)
+    // const [flagTochange, setflagTochange]=useState()
+
     const [errorMessage, setErrorMessage] = useState('')
     const [data,setData]=useState({
         classroomNumber: ''
@@ -77,13 +79,17 @@ export default  function KeysPage() {
     const handleCreateKey=async ()=>{
         if(data.classroomNumber!=''){
             const response=await CreateKeyFetch(data,localStorage.getItem('token'))
-            
+            debugger
             if(response.status==200){
                 setFlagKey(true)
+                fetchData()
                 setErrorMessage('')
+                handleModalClose(false)
             }
             else{
-                setErrorMessage('Такой ключ уже существует!')
+                debugger
+                const responseError=await response.json()
+                setErrorMessage(responseError.Message)
                 setFlagKey(false)
             }
         }
@@ -117,7 +123,7 @@ export default  function KeysPage() {
                         Создать
                     </Button>
                     {flagKey === false ? (
-                        <Alert className="w-100" variant="danger">{errorMessage}</Alert>
+                        <Alert className="w-100 text-center " variant="danger">{errorMessage}</Alert>
                     ) : (
                         <></>
                     )}
@@ -162,7 +168,7 @@ export default  function KeysPage() {
                     </FormGroup>
                 </CardBody>
             </Card>
-           <Card className="mt-2">
+           <Card className="mt-2 mb-2">
                 <CardBody className="text-center">
                     <div className="me-3 ms-3">
                         {flag===true  ? (
