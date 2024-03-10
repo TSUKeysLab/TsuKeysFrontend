@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
-import {Alert, Container,ModalHeader, ModalBody,Card,ModalFooter, CardBody, Modal, CardHeader, FormGroup, FormLabel, FormControl,Button } from 'react-bootstrap';
+import {Alert,FormCheck,  Container,ModalHeader, ModalBody,Card,ModalFooter, CardBody, Modal, CardHeader, FormGroup, FormLabel, FormControl,Button } from 'react-bootstrap';
 import { KeysFeedFetch,CreateKeyFetch } from "../requests/requestsMetods";
 import { useNavigate } from "react-router-dom";
 import KeyCard from "./keysCard";
 
 export default  function KeysPage() {
 
-    const baseUrl = 'http://89.111.174.112:8181/key?gettingStatus=AllKeys';
+    const baseUrl = 'http://89.111.174.112:8181/key';
 
 
     const [keys, setKeys] = useState([]);
+    const [keyNum, setKeyNum] = useState('');
     const [flag, setFlag]=useState(true)
     const [flagKey, setFlagKey]=useState(true)
     const [errorMessage, setErrorMessage] = useState('')
@@ -17,20 +18,42 @@ export default  function KeysPage() {
         classroomNumber: ''
     })
     const [showModal, setShowModal] = useState(false);
+    const [selectedOption, setSelectedOption] = useState('showAll');
+
 
     useEffect(() => {
         fetchData();
-    }, [flagKey]);
+    }, [flagKey, keyNum,selectedOption]);
 
     
-    
+    console.log(selectedOption)
     const fetchData = async () => {
         let url = baseUrl;
-        
-        
+        // if(keyNum!=''){
+        //     url+='classroomNumber'
+        // }
+        if(selectedOption==="showAll"){
+            url=baseUrl
+        }
+        if(selectedOption==="dean"){
+            url+='?owned=false'
+        }
+        if(selectedOption==="onHands"){
+            url+='?owned=true'
+        }
+        if(keyNum!=''){
+            if(selectedOption==="showAll"){
+                url+='?classroomNumber='+keyNum
+            }
+            else{
+                url+='&classroomNumber='+keyNum
+            }
+            
+        }
+
         const data = await KeysFeedFetch(url, localStorage.getItem('token'));
         
-        if(Array.isArray(data)){
+        if(data.length>0){
             setFlag(true)
         }
         else{
@@ -41,7 +64,9 @@ export default  function KeysPage() {
         
     };
     
-    
+    const handleKeyNumChange = (e) => {
+        setKeyNum(e.target.value)
+    };
     const handleModalShow = () => {
         setShowModal(true);
     };
@@ -66,6 +91,9 @@ export default  function KeysPage() {
     }
 
     
+    const handleOptionChange = (e) => {
+        setSelectedOption(e.target.value);
+      };
 
     const handleKeyChange=(e)=>{
         setData({
@@ -96,7 +124,46 @@ export default  function KeysPage() {
                     )}
                 </ModalFooter>
             </Modal>
-           <Card className="">
+            <Card>
+                <CardHeader>Фильтры</CardHeader>
+                <CardBody className="row">
+                    <FormGroup  className="col-md-3">
+                        <FormControl placeholder="Номер аудитории" value={keyNum} onChange={handleKeyNumChange}></FormControl>
+                    </FormGroup>
+                    <FormGroup className="col-md-8 d-flex align-items-center ">
+                        <div>
+                        <FormCheck
+                            inline
+                            type="radio"
+                            label="Показать все"
+                            name="filter"
+                            value="showAll"
+                            checked={selectedOption === 'showAll'}
+                            onChange={handleOptionChange}
+                        />
+                        <FormCheck
+                            inline
+                            type="radio"
+                            label="В деканате"
+                            name="filter"
+                            value="dean"
+                            checked={selectedOption === 'dean'}
+                            onChange={handleOptionChange}
+                        />
+                            <FormCheck
+                            inline
+                            type="radio"
+                            label="На руках"
+                            name="filter"
+                            value="onHands"
+                            checked={selectedOption === 'onHands'}
+                            onChange={handleOptionChange}
+                        />
+                        </div>
+                    </FormGroup>
+                </CardBody>
+            </Card>
+           <Card className="mt-2">
                 <CardBody className="text-center">
                     <div className="me-3 ms-3">
                         {flag===true  ? (
