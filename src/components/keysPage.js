@@ -26,7 +26,6 @@ export default  function KeysPage() {
     }, [flagKey, keyNum,selectedOption]);
 
     
-    console.log(selectedOption)
     const fetchData = async () => {
         let url = baseUrl;
         // if(keyNum!=''){

@@ -37,7 +37,6 @@ export default function Login(){
             setLoading(false);
             if (response.token) {
                 const responseProfile=await ProfileFetch(response.token)
-                console.log('role',responseProfile.role)
                 if (responseProfile.role==='DeanTeacher' || responseProfile.role==='Dean' || responseProfile.role==='Administrator'){
                     localStorage.setItem('token', response.token)
                     localStorage.setItem('AuthFlag', JSON.stringify(true))
