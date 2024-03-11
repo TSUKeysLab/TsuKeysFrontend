@@ -11,13 +11,16 @@ export default  function UsersPage() {
     const [requests, setRequests] = useState([]);
     const [numCab,setNumCab ] = useState('');
     const [flag, setFlag]=useState(true)
+    const [flagBack, setFlagBack]=useState(false)
+
     const [selectedOption, setSelectedOption] = useState('defReq');
 
     useEffect(() => {
         fetchData();
-    }, [numCab]);
+    }, [numCab,selectedOption]);
 
     const fetchData = async () => {
+        
         if(selectedOption==='defReq'){
             let url = baseUrl;
             url += 'page=1&size=100';
@@ -30,22 +33,26 @@ export default  function UsersPage() {
             // debugger
 
             if(!data.requests){
-                setFlag(true)
+                setFlag(false)
             }
             else{
                 setFlag(true)
-                setRequests(data.requests);
+                setFlagBack(false)
             }
+            
+            setRequests(data.requests);
         }
         else{
             let url='http://89.111.174.112:8181/key/requests/dean'
             const data=await RequestsBackFeedFetch(url, localStorage.getItem('token'))
             if(data.length>0){
-                setRequests(data.requests);
-                setFlag(true)
+                
+                setRequests(data);
+                setFlag(false)
+                setFlagBack(true)
             }
             else{
-                setFlag(true)
+                setFlagBack(false)
             }
         }
         
@@ -57,7 +64,7 @@ export default  function UsersPage() {
     // fetchData()
     
     const renderRequestsByStatus = (status) => {
-        if(flag===true){
+        if(flag===true && selectedOption==='defReq'){
             return requests
             .filter(request => request.status == status)
             .map(request => (
@@ -80,14 +87,14 @@ export default  function UsersPage() {
         
     };
     const renderBackRequestsByStatus = (status) => {
-        if(flag===true){
+        if(flagBack===true && selectedOption==='backReq'){
             return requests
             .filter(request => request.status == status)
             .map(request => (
                 
                 <RequestBackCard
                     key={request.requestId}
-                    id={request.requestId}
+                    requestId={request.requestId}
                     keyOwnerFullName={request.keyOwnerFullName}
                     classroomNumber={request.classroomNumber}
                     status={request.status}
@@ -183,7 +190,7 @@ export default  function UsersPage() {
                             {renderBackRequestsByStatus("Approved")}
                         </Accordion.Body>
                     </Accordion.Item>
-                    <Accordion.Item eventKey="2">
+                    {/* <Accordion.Item eventKey="2">
                         <Accordion.Header>Отклоненные заявки</Accordion.Header>
                         <Accordion.Body className="text-center">
                             {renderBackRequestsByStatus("Rejected")}
@@ -194,7 +201,7 @@ export default  function UsersPage() {
                         <Accordion.Body className="text-center">
                             {renderBackRequestsByStatus("Ended")}
                         </Accordion.Body>
-                    </Accordion.Item>
+                    </Accordion.Item> */}
                 </Accordion>
             )}
             

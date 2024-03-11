@@ -36,9 +36,7 @@ export default  function KeysPage() {
         if(selectedOption==="showAll"){
             url=baseUrl
         }
-        if(selectedOption==="dean"){
-            url+='?owned=false'
-        }
+        
         if(selectedOption==="onHands"){
             url+='?owned=true'
         }
@@ -146,16 +144,8 @@ export default  function KeysPage() {
                             checked={selectedOption === 'showAll'}
                             onChange={handleOptionChange}
                         />
+                        
                         <FormCheck
-                            inline
-                            type="radio"
-                            label="В деканате"
-                            name="filter"
-                            value="dean"
-                            checked={selectedOption === 'dean'}
-                            onChange={handleOptionChange}
-                        />
-                            <FormCheck
                             inline
                             type="radio"
                             label="На руках"
